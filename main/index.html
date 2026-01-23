@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>menu</title>
+  <style>
+    body {
+      background-color:#d1001f;
+      color: #ffee00;
+      font-family: 'Arial Black', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 60px;
+      margin-top: 20px;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 30px;
+    }
+
+    .menu-container {
+      width: 90%;
+      margin: 0 auto;
+      display: grid;
+      /* CHANGE: Changed from repeat(3, 1fr) to repeat(4, 1fr) to accommodate four columns */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .menu-header {
+      font-size: 36px;
+      text-decoration: underline;
+      margin-bottom: 10px;
+    }
+
+    .menu-column {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .item {
+      background-color: #990F02;
+      border: 3px solid #ffb300;
+      border-radius: 30px;
+      width: 90%;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .item:hover {
+      transform: scale(1.05);
+    }
+
+    .item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ffb300;
+    }
+
+    .item-text {
+      text-align: left;
+      flex: 1;
+    }
+
+    .item-name {
+      font-size: 30px;
+      margin: 0;
+    }
+
+    .item-price {
+      font-size: 24px;
+      color: #fff;
+      margin: 3px 0 0 0;
+    }
+
+    /* Out-of-stock style */
+    .out-of-stock {
+      color: #777;
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .out-of-stock img {
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
+
+    /* Remove button */.remove-btn {
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  opacity: 0;        
+  pointer-events: none;  
+  transition: opacity 0.2s ease;
+}
+
+.item:hover .remove-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.remove-btn:hover {
+  background: #cc0000;
+}
+
+  </style>
+</head>
+<body>
+
+<button id="addItemBtn" style="
+  padding: 10px 20px;
+  background: #ffb300;
+  color: #3e0b0b;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+">
+  Add New Item
+</button>
+
+<div id="addItemForm" style="
+  display: none;
+  background: #4a0f0f;
+  padding: 20px;
+  border: 3px solid #ffb300;
+  width: 300px;
+  margin: 20px auto;
+  border-radius: 10px;
+  color: white;
+">
+  <h3>Add Menu Item</h3>
+
+  <label>Category:</label>
+  <select id="newCategory">
+    <option value="foodColumn">Food</option>
+    <option value="drinkColumn">Drinks</option>
+    <option value="snackColumn">Snacks</option>
+    <option value="snackColumn2">Snacks Overflow</option>
+  </select>
+
+  <br><br>
+
+  <label>Name:</label>
+  <input id="newName" type="text" style="width: 100%;">
+
+  <br><br>
+
+  <label>Price:</label>
+  <input id="newPrice" type="text" style="width: 100%;">
+
+  <br><br>
+
+  <label>Image URL:</label>
+  <input id="newImage" type="text" style="width: 100%;" placeholder="Go the images Folder give the Name>
+
+  <br><br>
+
+  <button id="saveNewItem" style="
+    padding: 8px 15px;
+    background: #990F02;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  ">Add Item</button>
+</div>
+
+
+<div class="menu-container">
+  <div class="menu-column" id="foodColumn">
+    <div class="menu-header">FOOD</div>
+
+    <div class="item">
+      <img src="../images/walking-tacos.jpg" alt="Walking Taco">
+      <div class="item-text">
+        <p class="item-name">Walking Taco</p>
+        <p class="item-price">$5.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/nachos.jpg" alt="Nachos">
+      <div class="item-text">
+        <p class="item-name">Nachos</p>
+        <p class="item-price">$3.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Pretzel-Cheese.jpg" alt="Pretzel w/ Cheese">
+      <div class="item-text">
+        <p class="item-name">Pretzel w/ Cheese</p>
+        <p class="item-price">$4.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/hotdog.jpg" alt="Hot Dog">
+      <div class="item-text">
+        <p class="item-name">Hot Dog</p>
+        <p class="item-price">$3.00</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-column" id="drinkColumn">
+    <div class="menu-header">DRINKS</div>
+
+    <div class="item">
+      <img src="../images/soda.webp" alt="Soda">
+      <div class="item-text">
+        <p class="item-name">Soda</p>
+        <p class="item-price">$3.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/water.jpg">
+      <div class="item-text">
+        <p class="item-name">Water</p>
+        <p class="item-price">$3.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/sweet-tea.jpg">
+      <div class="item-text">
+        <p class="item-name">Sweet Tea</p>
+        <p class="item-price">$3.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/coffee.jpg" alt="Coffee">
+      <div class="item-text">
+        <p class="item-name">Coffee</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Hot-Chocolate.jpg" alt="Hot Chocolate">
+      <div class="item-text">
+        <p class="item-name">Hot Chocolate</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Powerade.jpg" alt="Powerade">
+      <div class="item-text">
+        <p class="item-name">Powerade</p>
+        <p class="item-price">$3.00</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-column" id="snackColumn">
+    <div class="menu-header">SNACKS</div>
+
+    <div class="item">
+      <img src="../images/Airheads.jpg" alt="Airheads">
+      <div class="item-text">
+        <p class="item-name">Airheads</p>
+        <p class="item-price">$0.25</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Candy.jpg" alt="Candy">
+      <div class="item-text">
+        <p class="item-name">Candy</p>
+        <p class="item-price">$2.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Cotton-Candy.jpg" alt="Cotton Candy">
+      <div class="item-text">
+        <p class="item-name">Cotton Candy</p>
+        <p class="item-price">$2.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/gum.jpg" alt="Gum">
+      <div class="item-text">
+        <p class="item-name">Gum</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Seeds.jpg" alt="Seeds">
+      <div class="item-text">
+        <p class="item-name">Seeds</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Cookies.jpg" alt="Cookies">
+      <div class="item-text">
+        <p class="item-name">Cookies</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+</div>
+
+  <div class="menu-column" id="snackColumn2">
+    <div class="menu-header">MORE SNACKS</div>
+    <div class="item">
+      <img src="../images/Chips.webp" alt="Chips">
+      <div class="item-text">
+        <p class="item-name">Chips</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Popcorn.jpg" alt="Popcorn">
+      <div class="item-text">
+        <p class="item-name">Popcorn</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Jerky.jpg" alt="Jerky">
+      <div class="item-text">
+        <p class="item-name">Jerky</p>
+        <p class="item-price">$2.50</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="../images/Pickle.jpg">
+      <div class="item-text">
+        <p class="item-name">Pickle</p>
+        <p class="item-price">$1.00</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer-bar"></div>
+
+<script>
+  /* ---------------------------
+        SAVE / LOAD
+  --------------------------- */
+
+  function saveStatus() {
+    const items = [];
+
+    document.querySelectorAll(".item").forEach(item => {
+      items.push({
+        name: item.querySelector(".item-name").textContent.trim(),
+        price: item.querySelector(".item-price").textContent.trim(),
+        img: item.querySelector("img").src,
+        category: item.closest(".menu-column").id,
+        outOfStock: item.classList.contains("out-of-stock")
+      });
+    });
+
+    localStorage.setItem("menuItems", JSON.stringify(items));
+  }
+
+  function attachToggle(item, column) {
+    item.addEventListener("click", () => {
+      item.classList.toggle("out-of-stock");
+      column.removeChild(item);
+
+      if (item.classList.contains("out-of-stock")) {
+        column.appendChild(item);
+      } else {
+        const firstOut = column.querySelector(".out-of-stock");
+        if (firstOut) column.insertBefore(item, firstOut);
+        else column.appendChild(item);
+      }
+
+      saveStatus();
+    });
+  }
+
+  function attachRemoveButton(item) {
+    const btn = document.createElement("button");
+    btn.classList.add("remove-btn");
+    btn.textContent = "X";
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      item.remove();
+      saveStatus();
+    });
+
+    item.appendChild(btn);
+  }
+
+  function loadStatus() {
+    const saved = JSON.parse(localStorage.getItem("menuItems") || "[]");
+
+    if (saved.length === 0) return;
+
+    document.querySelectorAll(".menu-column").forEach(col => {
+      col.querySelectorAll(".item").forEach(i => i.remove());
+    });
+
+    saved.forEach(savedItem => {
+      // NOTE: This will now look for 'snackColumn2' as well
+      const column = document.getElementById(savedItem.category);
+
+      const item = document.createElement("div");
+      item.classList.add("item");
+      if (savedItem.outOfStock) item.classList.add("out-of-stock");
+
+      item.innerHTML = `
+        <img src="${savedItem.img}">
+        <div class="item-text">
+          <p class="item-name">${savedItem.name}</p>
+          <p class="item-price">${savedItem.price}</p>
+        </div>
+      `;
+
+      attachToggle(item, column);
+      attachRemoveButton(item);
+
+      column.appendChild(item);
+    });
+  }
+
+  /* ---------------------------
+        INITIALIZE DEFAULT ITEMS
+  --------------------------- */
+
+  document.querySelectorAll(".menu-column").forEach(column => {
+    column.querySelectorAll(".item").forEach(item => {
+      attachToggle(item, column);
+      attachRemoveButton(item);
+    });
+  });
+
+  /* ---------------------------
+          ADD ITEM
+  --------------------------- */
+
+  document.getElementById("addItemBtn").addEventListener("click", () => {
+    const form = document.getElementById("addItemForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  });
+
+  document.getElementById("saveNewItem").addEventListener("click", () => {
+    // NOTE: This now correctly uses the category ID including 'snackColumn2'
+    const category = document.getElementById("newCategory").value;
+    const name = document.getElementById("newName").value.trim();
+    const price = document.getElementById("newPrice").value.trim();
+    const img = document.getElementById("newImage").value.trim();
+
+    if (!name || !price || !img) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    const column = document.getElementById(category);
+
+    const item = document.createElement("div");
+    item.classList.add("item");
+    item.innerHTML = `
+      <img src="${img}">
+      <div class="item-text">
+        <p class="item-name">${name}</p>
+        <p class="item-price">$${price}</p>
+      </div>
+    `;
+
+    attachToggle(item, column);
+    attachRemoveButton(item);
+
+    column.appendChild(item);
+    saveStatus();
+
+    document.getElementById("newName").value = "";
+    document.getElementById("newPrice").value = "";
+    document.getElementById("newImage").value = "";
+
+    alert("Item added!");
+  });
+
+  loadStatus();
+</script>
+
+</body>
+</html>
